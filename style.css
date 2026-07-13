@@ -1,0 +1,20 @@
+/* 기본 라이트 모드 스타일 */
+body {
+    background-color: #ffffff;
+    color: #333333;
+    transition: background-color 0.3s ease, color 0.3s ease; /* 부드러운 색상 전환 */
+    padding: 20px;
+    font-family: sans-serif;
+}
+
+/* body에 dark-mode 클래스가 추가되었을 때의 스타일 */
+body.dark-mode {
+    background-color: #1e1e1e;
+    color: #ffffff;
+}
+
+button {
+    padding: 8px 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
