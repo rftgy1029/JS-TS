@@ -1,0 +1,24 @@
+{
+  "name": "js-ts",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/rftgy1029/JS-TS#readme",
+  "bugs": {
+    "url": "https://github.com/rftgy1029/JS-TS/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rftgy1029/JS-TS.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "typescript": "^7.0.2"
+  }
+}
