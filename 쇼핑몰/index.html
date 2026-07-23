@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>내 쇼핑몰</title>
+  </head>
+  <body>
+    <div id="app">
+      <h2>🛒 상품 목록</h2>
+      <div id="products">
+        <button data-name="키보드" data-price="50000">키보드 - 50,000원 담기</button>
+        <button data-name="마우스" data-price="20000">마우스 - 20,000원 담기</button>
+        <button data-name="모니터" data-price="200000">모니터 - 200,000원 담기</button>
+      </div>
+
+      <hr />
+
+      <h2>내 장바구니 (<span id="cart-count">0</span>개)</h2>
+      <div id="cart-list">비어있음</div>
+      <h1>총합: <span id="total">0</span>원</h1>
+      <button id="clearBtn">장바구니 비우기</button>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
