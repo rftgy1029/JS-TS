@@ -1,0 +1,17 @@
+{
+  "name": "naejun-discord-bot",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Discord 내전 모집 및 랜덤 팀 배정 봇",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "register": "node src/register-commands.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "better-sqlite3": "^12.4.1",
+    "discord.js": "^14.25.1",
+    "dotenv": "^17.2.3"
+  }
+}
