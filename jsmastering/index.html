@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>JS 기초 1단계</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      font-family: sans-serif;
+    }
+    #counter {
+      font-size: 48px;
+      margin-bottom: 20px;
+    }
+    button {
+      font-size: 18px;
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 1. 화면에 보일 HTML 요소 -->
+  <div id="counter">0</div>
+  <button id="btn">+</button>
+  <button id="btntolow">-</button>
+
+  <!-- 2. 화면을 제어할 자바스크립트 -->
+  <script>
+    // (1) 조작할 요소를 잡기
+    const numberText = document.querySelector("#counter");
+    const clickButton = document.querySelector("#btn");
+    const clickButtonToLow = document.querySelector("#btntolow")
+
+    // (2) 기억할 숫자 변수 선언
+    let count = 0;
+
+    // (3) 버튼에 클릭 이벤트 달기
+    clickButton.addEventListener("click", () => {
+        count = count + 1; // 숫자를 1 더하고
+        numberText.textContent = count; // 화면의 텍스트를 바뀐 숫자로 교체!
+    });
+
+    clickButtonToLo.addEventListener("click", () => {
+        count = count - 1;
+        updateDisplay();
+    });
+
+    function
+  </script>
+
+</body>
+</html>
