@@ -3,11 +3,16 @@ import { Client, Events, GatewayIntentBits, PermissionFlagsBits } from 'discord.
 import { SqliteStore } from './sqlite-store.js';
 import { DomainError, SessionService } from './session-service.js';
 import { buildEndedSessionMessage, buildSessionMessage } from './presentation.js';
+import { startStatusServer } from './status-server.js';
 
-if (!process.env.DISCORD_TOKEN) throw new Error('.env에 DISCORD_TOKEN을 설정해 주세요.');
+// BASE44_PREVIEW_MODE=1일 때만 포트 3000에 상태 페이지를 띄웁니다. 값이 없거나 다르면 기존 동작 그대로입니다.
+const previewMode = process.env.BASE44_PREVIEW_MODE === '1';
+if (!process.env.DISCORD_TOKEN && !previewMode) throw new Error('.env에 DISCORD_TOKEN을 설정해 주세요.');
 
+const status = { state: 'starting', tag: null, guildCount: 0, error: null, startedAt: Date.now(), readyAt: null };
 const store = new SqliteStore();
 const sessions = new SessionService(store);
+if (previewMode) startStatusServer({ store, status });
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 const isAdmin = (interaction) => interaction.memberPermissions?.has(PermissionFlagsBits.Administrator) ?? false;
 
@@ -35,7 +40,13 @@ async function endMessage(session) {
   }
 }
 
-client.once(Events.ClientReady, (readyClient) => console.log(`${readyClient.user.tag} 로그인 완료`));
+client.once(Events.ClientReady, (readyClient) => {
+  console.log(`${readyClient.user.tag} 로그인 완료`);
+  status.state = 'ready';
+  status.tag = readyClient.user.tag;
+  status.guildCount = readyClient.guilds.cache.size;
+  status.readyAt = Date.now();
+});
 
 client.on(Events.InteractionCreate, async (interaction) => {
   try {
@@ -105,4 +116,15 @@ async function handleButton(interaction) {
   await interaction.update(buildSessionMessage(session));
 }
 
-client.login(process.env.DISCORD_TOKEN);
+if (!process.env.DISCORD_TOKEN) {
+  status.state = 'error';
+  status.error = 'DISCORD_TOKEN이 없어 디스코드에 로그인하지 못했습니다. Base44 시크릿에 봇 토큰을 추가해 주세요.';
+  console.warn(status.error);
+} else {
+  client.login(process.env.DISCORD_TOKEN).catch((error) => {
+    status.state = 'error';
+    status.error = `디스코드 로그인 실패: ${error.message}`;
+    console.error('디스코드 로그인 실패:', error.message);
+    if (!previewMode) process.exit(1);
+  });
+}

@@ -29,6 +29,9 @@ export class SqliteStore {
     const row = this.db.prepare('SELECT * FROM sessions WHERE guild_id = ?').get(guildId);
     return row ? this.hydrate(row) : null;
   }
+  listSessions() {
+    return this.db.prepare('SELECT * FROM sessions ORDER BY id').all().map((row) => this.hydrate(row));
+  }
   hydrate(row) {
     const members = this.db.prepare('SELECT user_id AS userId, role FROM members WHERE session_id = ? ORDER BY role, position').all(row.id);
     return { id: row.id, guildId: row.guild_id, channelId: row.channel_id, messageId: row.message_id, hostId: row.host_id, game: row.game, capacity: row.capacity, status: row.status,

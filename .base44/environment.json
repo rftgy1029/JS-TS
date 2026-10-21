@@ -1,0 +1,22 @@
+{
+  "previewPort": 3000,
+  "healthPath": "/",
+  "startCommand": "docker compose -f docker-compose.base44.yml up -d",
+  "secrets": [
+    {
+      "name": "DISCORD_TOKEN",
+      "description": "Discord Developer Portal → 본인 애플리케이션 → Bot → Reset Token 으로 발급한 봇 토큰",
+      "requiredAtBoot": false
+    },
+    {
+      "name": "CLIENT_ID",
+      "description": "Discord Developer Portal → General Information → Application ID (슬래시 명령어 등록에 사용)",
+      "requiredAtBoot": false
+    },
+    {
+      "name": "GUILD_ID",
+      "description": "슬래시 명령어를 등록할 디스코드 서버 ID (개발자 모드에서 서버 우클릭 → 서버 ID 복사)",
+      "requiredAtBoot": false
+    }
+  ]
+}

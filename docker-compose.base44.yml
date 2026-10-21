@@ -1,0 +1,33 @@
+# Base44 개발 환경용 compose 파일입니다.
+# 저장소의 소스를 그대로 바인드 마운트해서 실행하므로 코드 수정이 재빌드 없이 반영됩니다.
+services:
+  bot:
+    image: node:22-slim
+    working_dir: /app
+    labels:
+      base44.project: "내전봇 Discord Bot"
+      base44.kind: "web"
+      base44.port: "3000"
+    command: ["sh", "-ec", "npm ci --no-audit --no-fund && exec node --watch src/index.js"]
+    environment:
+      - BASE44_PREVIEW_MODE
+      - PREVIEW_STATUS_PORT=3000
+    env_file:
+      - /run/base44/app.env
+    volumes:
+      - ./내전봇:/app
+      - naejun_node_modules:/app/node_modules
+      - naejun_data:/app/data
+    ports:
+      - "3000:3000"
+    restart: on-failure
+    healthcheck:
+      test: ["CMD-SHELL", "node -e \"fetch('http://127.0.0.1:3000/').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))\""]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 120s
+
+volumes:
+  naejun_node_modules:
+  naejun_data:
