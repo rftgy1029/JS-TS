@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CountApp</title>
+</head>
+<body>
+    
+    <h1>버튼을 눌러라</h1>
+
+    <h2 id="countNum">0</h2>
+
+    <button id="countBtn">나를 눌러!</button>
+
+    
+    <script>
+        const countBtn = document.querySelector("#countBtn");
+        const countNum = document.querySelector("#countNum");
+
+        let count = 0;
+
+        countBtn.addEventListener("click", () => {
+            count = count + 1;
+            countNum.textContent = count;
+        })
+    </script>
+</body>
+</html>
