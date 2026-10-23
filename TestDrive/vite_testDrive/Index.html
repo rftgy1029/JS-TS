@@ -11,18 +11,29 @@
 
     <h2 id="countNum">0</h2>
 
-    <button id="countBtn">나를 눌러!</button>
+    <button id="increaseBtn">올리기!</button>
+    <button id="decreaseBtn">줄이기</button>
 
     
     <script>
-        const countBtn = document.querySelector("#countBtn");
+        const countBtn = document.querySelector("#increaseBtn");
         const countNum = document.querySelector("#countNum");
+        const downcountBtn = document.querySelector("#decreaseBtn");
 
         let count = 0;
 
         countBtn.addEventListener("click", () => {
             count = count + 1;
             countNum.textContent = count;
+        })
+
+        downcountBtn.addEventListener("click", () => {
+            if (count === 0) {
+                alert("0보다 작게는 안됨")
+            } else {
+                count = count - 1;
+                countNum.textContent = count;
+            }
         })
     </script>
 </body>
