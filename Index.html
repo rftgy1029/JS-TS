@@ -3,9 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>숫자 맞추기</title>
 </head>
 <body>
-    
+    <h1>숫자 맞추기</h1>
+    <p>1~100 중에서 숫자를 입력해보세요!</p>
+    <input type="number" id="guessinput" min="1" max="100" for="number" placeholder="여기에 숫자 입력"> <button id="guessbutton">입력</button>
+    <p id="answer"></p>
+    <ul id="history" aria-label="시도 기록" aria-live="polite"></ul>
+
+    <script>
+        const randomNum = Math.floor(Math.random() * 100) + 1;
+        const input = document.getElementById("guessinput");
+        const button = document.getElementById("guessbutton");
+        const answer = document.getElementById("answer");
+        const historyList = document.getElementById("history");
+
+        let attempts = 0;
+
+        function recordAttempt(guess) {
+            const item = document.createElement("li");
+            item.textContent = `${guess} 입력 → ${answer.textContent}`;
+            historyList.appendChild(item);
+        }
+
+        button.addEventListener("click", function () {
+            const guess = Number(input.value);
+
+            if (input.value.trim() === "" || !Number.isInteger(guess) || guess < 1 || guess > 100) {
+                answer.textContent = "1~100 사이의 정수를 입력해주세요.";
+                return;
+            }
+
+            attempts++;
+
+            if (guess < randomNum) {
+                answer.textContent = `${attempts}번째 시도: 더 큰 숫자예요!`;
+                recordAttempt(guess);
+            } else if (guess > randomNum) {
+                answer.textContent = `${attempts}번째 시도: 더 작은 숫자예요!`;
+                recordAttempt(guess);
+            } else {
+                answer.textContent = `정답! ${attempts}번 만에 맞혔어요 🎉`;
+                recordAttempt(guess);
+                button.disabled = true;
+                input.disabled = true;
+                return;
+            }
+
+            input.value = "";
+            input.focus();
+        });
+
+
+        
+    </script>
 </body>
 </html>
